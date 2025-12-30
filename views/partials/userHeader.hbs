@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-light  sticky-top">
+  <div class="container-fluid">
+    <img src="/images/logos/logo2.png" alt="logo" style="height: 32px; width: 32px;">
+    <a class="navbar-brand text-white fw-bold fs-6" href="/user"><small>Power <span class="text-warning">House</span></small></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav"> 
+      <ul class="navbar-nav ms-auto">
+      
+        <li class="nav-item">
+          <a class="nav-link text-white {{#if homeActive}}fw-bold border-bottom border-light{{/if}}"
+            href="/user/">Home</a>
+        </li>
+        {{#unless registerPage}}
+        {{#unless loginPage}}
+        
+        <li class="nav-item">
+          <a class="nav-link text-white {{#if cartActive}}fw-bold border-bottom border-light{{/if}}"
+            href="/user/cart">Cart</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white {{#if orderActive}}fw-bold border-bottom border-light{{/if}}"
+            href="/user/myorders">Order</a>
+        </li>
+        {{/unless}}
+        
+        
+        <li class="nav-item">
+          <a class="nav-link text-white {{#if registerActive}}fw-bold border-bottom border-light{{/if}}"
+            href="/user/register">Register</a>
+        </li>
+        {{/unless}}
+        {{#unless loginPage}}
+        <li class="nav-item">
+          <a class="nav-link text-white {{#if loginActive}}fw-bold border-bottom border-light{{/if}} "
+            href="/user/login">Login</a>
+        </li>
+        {{/unless}}
+        {{#unless registerPage}}
+        {{#unless loginPage}}
+        <li class="nav-item d-flex align-items-sm-center">
+          <a href="/user/logout" class="btn btn-danger btn-sm ms-3 px-3 py-0 ">Logout</a>
+        </li>
+        {{/unless}}
+        {{/unless}}
+      </ul>
+    </div>
+  </div>
+</nav>

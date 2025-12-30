@@ -1,0 +1,29 @@
+<div class="container bg-light shadow p-3 text-center ">
+  <table class="table table-bordered align-middle mt-4 bg-light table-hover">
+    <caption class="caption-top p-2 mb-5">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="m-0">Sub Categories</h5>
+        <a href="/admin/addsubcategory" class="btn btn-success">Add New Sub Category</a>
+      </div>
+    </caption>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Sub Category</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each subCatData}}
+      <tr>
+        <td>{{this.categoryCollection.category}}</td>
+        <td>{{this.subCategory}}</td>
+        <td class="text-center">
+          <a class="btn btn-primary px-2 py-0 me-2" href="/admin/edisubcategory/{{this._id}}"><small>Edit</small></a>
+          <a class="btn btn-danger px-2 py-0" href="/admin/deletesubcategory/{{this._id}}"><small>Delete</small></a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

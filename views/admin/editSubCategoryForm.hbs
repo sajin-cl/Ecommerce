@@ -1,0 +1,52 @@
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg p-4 rounded-4">
+        <h3 class="text-center mb-4">Edit sub category</h3>
+
+        <form method="post" action="" enctype="multipart/form-data">
+
+          <div class="mb-3">
+            <label for="prodCategory" class="form-label text-primary">Category</label>
+            <select name="prodCategory" id="prodCategory" class="form-select">
+              {{#each catData}}
+              <option value="{{this._id}}">{{this.category}}</option>
+              {{/each}}
+            </select>
+          </div>
+
+          <input type="hidden" id="hideProdCat" value="{{subCatData.prodCategory}}">
+
+          <div class="mb-3">
+            <label for="prodSubCategory" class="form-label text-primary">Sub category</label>
+            <input type="text" name="prodSubCategory" id="prodSubCategory" class="form-control"
+              placeholder="Enter the category" value="{{subCatData.subCategory}}">
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg " id="atr-submit-btn">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  const prodCatName = document.getElementById('prodCategory');
+  const hideProdCategory = document.getElementById('hideProdCat').value;
+
+  for (let i = 0; i < prodCatName.options.length; i++) {
+
+    let prod = prodCatName[i];
+
+    if (prod.value == hideProdCategory) {
+      prod.selected = true;
+      break;
+    };
+
+  };
+
+  
+</script>

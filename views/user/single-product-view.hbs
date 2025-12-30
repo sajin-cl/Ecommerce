@@ -1,0 +1,56 @@
+<section class="single-product-sec bg-light py-4">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+
+      <!-- Product Image -->
+      <div class="col-lg-4">
+        <div class="card h-100 overflow-hidden">
+          <img src="/images/{{sinProdData.prodImage}}" class="card-img-top img-fluid" alt="{{sinProdData.product}}">
+        </div>
+      </div>
+
+      <!-- Product Details -->
+
+      <div class="col-lg-8">
+        <div class="card h-100 p-4 d-flex flex-column justify-content-between">
+
+          <!-- Product Name -->
+          <h2 class="prod-name fs-4 fw-bold mb-3">{{sinProdData.product}}</h2>
+
+          <!-- Product Description -->
+          <div class="prod-desc mb-4">
+            <p class="text-primary mb-1">Product Description:</p>
+            <p>{{sinProdData.desc}}</p>
+          </div>
+
+          <!-- Price -->
+          <div class="prod-rate fs-5 mb-3"><strong>&#8377;{{sinProdData.price}}</strong></div>
+
+          <!-- Buttons -->
+          <div class="btn-sec d-flex">
+            <button class="btn btn-primary me-3 fs-6">Buy Now</button>
+            <form  method="POST">
+              <button type="submit" class="btn btn-outline-dark fs-6">Add to Cart</button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  //Add to cart event handler
+  let addToCartBtn = document.getElementById('addToCart-btn');
+
+
+  addToCartBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    setTimeout(() => {
+      addToCartBtn.textContent = 'Go to cart';
+    }, 5);
+  });
+</script>

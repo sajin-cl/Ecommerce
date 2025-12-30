@@ -1,0 +1,90 @@
+<main>
+  <!-- Carousel Banner -->
+  <section class="bannerCarousel">
+    <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+          aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="/images/banner/banner1.webp" class="d-block w-100" alt="Banner 1"
+            style="height: 400px; object-fit: cover;">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/banner/banner2.webp" class="d-block w-100" alt="Banner 2"
+            style="height: 400px; object-fit: cover;">
+        </div>
+        <div class="carousel-item">
+          <img src="/images/banner/banner3.webp" class="d-block w-100" alt="Banner 3"
+            style="height: 400px; object-fit: cover;">
+        </div>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </section>
+
+  <!--Category section started here -->
+  <section class="category-section ">
+    <h4 class="ms-3">All Categories</h4>
+    <div class="container-fluid ">
+      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+        {{#each catData}}
+        <!--col started here -->
+        <div class="col" style="height: 400px;">
+          <div class="card product-card h-100">
+            <img src="/images/{{this.image}}" alt="{{this.image}}" class="card-img-top"
+              style="max-width: 250px; height: 250px; margin:auto;">
+            <div class="card-body P-2">
+              <div class="card-title product-name text-primary fw-bold">{{this.category}}</div>
+              <div class="card-text product-desc text-muted mb-3">{{this.desc}}</div>
+              <div class="mt-auto text-center">
+                <a class="view-btn" href="/user/product/category/{{this._id}}">View</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+        <!--col end here -->
+      </div>
+    </div>
+  </section>
+
+
+  <!--Product section stated here -->
+  <section class="product-section">
+    <h4 class="ms-3">All Products</h4>
+    <div class="container-fluid">
+      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+        <!--col started here -->
+        {{#each prodData}}
+        <div class="col">
+          <div class="card product-card h-100 ">
+            <img src="/images/{{this.prodImage}}" alt="images" class="card-img-top"
+              style="max-width: 250px; height: 250px; margin:auto;">
+            <div class="card-body P-2">
+              <div class="card-title product-name text-primary fw-bold mb-0">{{this.product}}</div>
+              <div class="card-text product-desc text-muted mb-3">{{this.desc}}</div>
+              <div class="mt-auto text-center">
+                <a class="view-btn" href="/user/singleproduct/{{this._id}}">View</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+        <!--col end here -->
+      </div>
+    </div>
+  </section>
+</main>

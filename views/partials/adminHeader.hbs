@@ -1,0 +1,44 @@
+<header class="sticky-top bg-success d-flex justify-content-between ps-3 pe-3 align-items-center">
+  <div class="left-section d-flex align-items-center">
+    <img src="/images/logos/logo2.png" alt="logo" style="height: 50px; width: 50px;">
+    <span class="text-white fw-bold ms-1">Power<span class="text-warning">House </span> Admin</span>
+  </div>
+  <div class="right-section">
+    <a href="/user/logout" class="btn btn-danger px-3 py-0"><small>Logout</small></a>
+  </div>
+</header>
+
+<nav class="sidebar bg-dark pt-3">
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link text-white {{#if adminDashboardActive}}active bg-success{{/if}}" href="/admin">
+        <i class="fa fa-tachometer me-2"></i> Dashboard
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white {{#if adminCategoryActive}}active bg-success{{/if}}" href="/admin/category">
+        <i class="fa fa-th me-2"></i> Categories
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white {{#if adminSubCategoryActive}}active bg-success{{/if}}" href="/admin/subcategory">
+        <i class="fa fa-th-list me-2"></i> Sub Categories
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white {{#if adminProductsActive}}active bg-success{{/if}}" href="/admin/product">
+        <i class="fa fa-suitcase me-2"></i> Products
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white {{#if usersActive}}active bg-success{{/if}}" href="/admin/users">
+        <i class="fa fa-users me-2"></i> View Users
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-danger" href="/logout">
+        <i class="fa fa-sign-out me-2"></i> Logout
+      </a>
+    </li>
+  </ul>
+</nav>

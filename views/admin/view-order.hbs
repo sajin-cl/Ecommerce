@@ -1,0 +1,42 @@
+<div class="container-fluid my-4 px-4">
+  <h4 class="mb-3">Your Orders</h4>
+
+  <!-- Order Card -->
+  <div class="card shadow-sm p-3 mb-3">
+    <!-- Order Header -->
+    <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap">
+      <div>
+        <strong>Order ID:</strong> 12345 <br>
+        <small class="text-muted">Placed on: 08-Nov-2025</small>
+      </div>
+      <div>
+        <span class="badge bg-success">Delivered</span>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Products in Order -->
+    {{#each orders}}
+    <div class="d-flex align-items-center mb-2">
+      <div class="order-img me-3">
+        <img src="/images/{{this.productInfo.prodImage}}" alt="Laptop" class="img-fluid rounded" style="width:70px; height:70px; object-fit:cover;">
+      </div>
+      <div class="flex-grow-1">
+        <div class="fw-bold">{{this.productInfo.product}}</div>
+        <div class="text-muted small">{{this.categoryInfo.category}}</div>
+        <div class="small">Qty: {{this.quantity}}</div>
+      </div>
+      <div class="text-end fw-bold">₹{{this.productInfo.price}}</div>
+    </div>
+    {{/each}}
+    <hr>
+
+    <!-- Order Total -->
+    <div class="d-flex justify-content-between align-items-center">
+      <strong>Total:</strong>
+      <strong>₹{{totalPrice}}</strong>
+    </div>
+  </div>
+
+</div>

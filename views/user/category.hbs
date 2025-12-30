@@ -1,0 +1,27 @@
+ <!--Product section stated here -->
+  <section class="product-section pb-3">
+   
+    <h5 class="ms-3 mb-3 border-bottom pb-3">All {{catData.category}} items </h5>
+   
+    <div class="container-fluid">
+      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+        <!--col started here -->
+       {{#each prodData}}
+        <div class="col">
+          <div class="card product-card h-100 ">
+            <img src="/images/{{this.prodImage}}" alt="images" class="card-img-top"
+              style="max-width: 250px; height: 250px; margin:auto;">
+            <div class="card-body P-2">
+              <div class="card-title product-name text-primary fw-bold mb-0">{{this.product}}</div>
+              <div class="card-text product-desc text-muted mb-3">{{this.desc}}</div>
+              <div class="mt-auto text-center">
+                <a class="view-btn" href="/user/singleproduct/{{this._id}}">View</a>
+              </div>
+            </div>
+          </div>
+        </div>
+       {{/each}}
+        <!--col end here -->
+      </div>
+    </div>
+  </section>

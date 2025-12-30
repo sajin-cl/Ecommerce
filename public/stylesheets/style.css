@@ -1,0 +1,32 @@
+body {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  
+}
+
+.sidebar {
+  position: fixed;
+  top: 48px;
+  left: 0;
+  bottom: 0;
+  width: 250px;
+  background-color: black;
+  padding-top: 5px;
+  overflow-y: auto;
+}
+
+.sidebar-link {
+  display: flex;
+  gap: 17px;
+}
+
+main {
+  margin-left: 250px;
+  width: calc(100% - 250px);
+  min-height: 100vh;
+  background-color: #d8e0ef;
+}
+table {
+  background-color: white;
+}
+

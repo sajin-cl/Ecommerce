@@ -1,0 +1,91 @@
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg p-4 rounded-4">
+        <h3 class="text-center mb-4">Edit Product</h3>
+
+        <form method="post" action="" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="prodCategory" class="form-label text-primary">Category</label>
+            <select name="prodCategory" id="prodCategory" class="form-select">
+              {{#each catData}}
+              <option value="{{this._id}}">{{this.category}}</option>
+              {{/each}}
+            </select>
+          </div>
+
+          <input type="hidden" id="catHideID" value="{{prodData.prodCategory}}">
+
+          <div class="mb-3">
+            <label for="prodSubCategory" class="form-label text-primary">Sub category</label>
+            <select name="prodSubCategory" id="prodSubCategory" class="form-select">
+              {{#each subCatData}}
+              <option value="{{this._id}}">{{this.subCategory}}</option>
+              {{/each}}
+            </select>
+          </div>
+
+          <input type="hidden" id="subCatHideID" value="{{prodData.prodSubCategory}}">
+
+          <div class="mb-3">
+            <label for="productName" class="form-label text-primary">Product </label>
+            <input type="text" value="{{prodData.product}}" id="productName" class="form-control"
+              placeholder="Enter the product name" name="productName">
+          </div>
+
+          <div class="mb-3">
+            <label for="prodDescription" class="form-label text-primary">Description</label>
+            <textarea class="form-control" id="prodDescription" name="prodDescription"
+              rows="1">{{prodData.desc}}</textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="prodPrice" class="form-label text-primary">Price</label>
+            <input type="number" class="form-control" id="prodPrice" placeholder="Enter the product price"
+              name="prodPrice" value="{{prodData.price}}">
+          </div>
+
+          <div class="mb-3">
+            <label for="prodImg" class="form-label text-primary">Product Image</label>
+            <input type="file" class="form-control" id="prodImg" name="prodImg" value="{{prodData.prodImage}}">
+            <p class="mt-3">current image:</p>
+            <img src="/images/{{prodData.prodImage}}" alt="" style="width:150px; height:150px; object-fit:cover;">
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg " id="atr-submit-btn">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  const prodCategory = document.getElementById('prodCategory');
+  const prodSubCategory = document.getElementById('prodSubCategory');
+  const prodCatHiddenID = document.getElementById('catHideID').value;
+  const prodSubCatHiddenID = document.getElementById('subCatHideID').value;
+
+  // Loop through the category dropdown options to select the one matching hidden value
+  for (let i = 0; i < prodCategory.options.length; i++) {
+    let prodCatOP = prodCategory[i];
+
+    if (prodCatOP.value == prodCatHiddenID) {
+      prodCatOP.selected = true;
+      break;
+    }
+  };
+
+  // Loop through the sub category dropdown options to select the one matching hidden value
+  for (let i = 0; i < prodSubCategory.options.length; i++) {
+    let prodSubCatOP = prodSubCategory[i];
+
+    if (prodSubCatOP.value == prodSubCatHiddenID) {
+      prodSubCatOP.selected = true;
+      break;
+    };
+
+  };
+</script>

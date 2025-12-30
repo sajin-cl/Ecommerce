@@ -1,0 +1,117 @@
+<div class="container-fluid my-4 px-4">
+  <h4 class="mb-1">Add to Cart</h4>
+  <p class="text-muted">{{totalProducts}} items in the cart</p>
+
+  <!-- 👇 Form submits directly to backend -->
+  <form method="POST"  id="cartForm" action="/user/myorders" enctype="multipart/form-data">
+    <div class="row g-4">
+      <!-- Left Side: Cart Items -->
+      <div class="col-lg-8">
+        {{#each cartData}}
+        <div
+          class="card product-card d-flex flex-column flex-md-row align-items-center justify-content-between p-3 mb-3 shadow-sm">
+          <div class="cart-img mb-3 mb-md-0">
+            <img src="/images/{{this.cartCollection.prodImage}}" alt="Product Image" class="img-fluid rounded"
+              style="height:140px; width:140px; object-fit:cover;">
+          </div>
+
+          <div class="cart-prod-details text-center text-md-start flex-grow-1 px-3">
+            <div class="text-dark fw-bold small">{{this.cartCollection.product}}</div>
+          </div>
+
+          <!-- Quantity -->
+          <div class="qty-btn d-flex align-items-center">
+            <i class="fa fa-plus-square-o fs-5 text-primary me-2 add-qty-btn" role="button"></i>
+            <span class="mx-2 fw-semibold prod-count">1</span>
+
+            <input type="hidden" name="quantities" class="prod-qty-input" value="{{this.quantity}}">
+
+            <i class="fa fa-minus-square-o fs-5 text-primary ms-2 minus-qty-btn" role="button"></i>
+          </div>
+
+          <!-- Price & Product ID -->
+          <div class="prod-rate text-center mx-3">
+            <strong>&#8377;{{this.cartCollection.price}}</strong>
+
+            <input type="hidden" name="productIds" value="{{this._id}}">
+            
+          </div>
+
+          <!-- Delete Item -->
+          <div class="del-icon text-danger" role="button">
+            <a href="/user/cartItem/delete/{{this._id}}" class="text-danger">
+              <i class="fa fa-trash-o fs-5" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+
+      <!-- Right Side: Order Summary -->
+      <div class="col-lg-4">
+        <div class="card p-4 shadow-sm sticky-top" style="top: 80px;">
+          <h5 class="border-bottom pb-2 mb-3">Order Summary</h5>
+
+          <div class="d-flex justify-content-between mb-2 mt-2">
+            <span class="text-muted">Total product</span>
+            <span class="text-muted">{{totalProducts}}</span>
+          </div>
+
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-muted">Sub Total</span>
+            <span class="text-muted subtotal-value">₹0</span>
+          </div>
+
+          <hr>
+
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <strong>Total</strong>
+            <strong class="fs-5 total-value">₹0</strong>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100" id="order-submit-btn">Proceed to Order</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+ 
+  function updateTotal() {
+    let subtotal = 0;
+    document.querySelectorAll('.product-card').forEach(card => {
+      const qty = parseInt(card.querySelector('.prod-count').textContent);
+      const price = parseFloat(card.querySelector('.prod-rate strong').textContent.replace('₹', '').trim());
+      subtotal += qty * price;
+    });
+    document.querySelector('.subtotal-value').textContent = '₹' + subtotal;
+    document.querySelector('.total-value').textContent = '₹' + subtotal;
+  }
+
+  document.querySelectorAll('.product-card').forEach(card => {
+    const plusBtn = card.querySelector('.add-qty-btn');
+    const minusBtn = card.querySelector('.minus-qty-btn');
+    const countEl = card.querySelector('.prod-count');
+    const qtyInput = card.querySelector('.prod-qty-input');
+    let count = parseInt(countEl.textContent);
+
+    plusBtn.addEventListener('click', () => {
+      count++;
+      countEl.textContent = count;
+      qtyInput.value = count;
+      updateTotal();
+    });
+
+    minusBtn.addEventListener('click', () => {
+      if (count > 1) {
+        count--;
+        countEl.textContent = count;
+        qtyInput.value = count;
+        updateTotal();
+      }
+    });
+  });
+
+  updateTotal();
+</script>

@@ -1,0 +1,57 @@
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg p-4 rounded-4">
+        <h3 class="text-center mb-4">Add Product</h3>
+        
+        <form method="post" action="" enctype="multipart/form-data">
+
+          <div class="mb-3">
+            <label for="prodCategory" class="form-label text-primary">Category</label>
+            <select name="prodCategory" id="prodCategory" class="form-select">
+              <option value="">Select Category</option>
+              {{#each catData}}
+              <option value="{{this._id}}">{{this.category}}</option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="prodSubCategory" class="form-label text-primary">Sub category</label>
+            <select name="prodSubCategory" id="prodSubCategory" class="form-select">
+              <option value="">Select Sub category</option>
+              {{#each subCatData}}
+              <option value="{{this._id}}">{{this.subCategory}}</option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="productName" class="form-label text-primary">Product </label>
+            <input type="text" value="" id="productName" class="form-control" placeholder="Enter the product name" name="productName">
+          </div>
+
+          <div class="mb-3">
+            <label for="prodDescription" class="form-label text-primary">Description</label>
+            <textarea class="form-control" id="prodDescription" name="prodDescription" rows="1"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="prodPrice" class="form-label text-primary">Price</label>
+            <input type="number" class="form-control" id="prodPrice" placeholder="Enter the product price" name="prodPrice">
+          </div>
+
+          <div class="mb-3">
+            <label for="prodImg" class="form-label text-primary">Product Image</label>
+            <input type="file" class="form-control" id="prodImg" name="prodImg" value="">
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg " id="atr-submit-btn">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
