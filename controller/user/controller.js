@@ -1,8 +1,8 @@
 var database = require('../../config/database');
 var mongodb = require('mongodb');
+var bcrypt = require('bcrypt');
 
 
-//User Home Page --->
 exports.userIndex = (req, res) => {
 
   const user = req.session?.userData?.user || null;
@@ -17,8 +17,6 @@ exports.userIndex = (req, res) => {
   });
 };
 
-
-//Single product view --->
 exports.singleProductView = (req, res) => {
   let sinProdID = req.params.id;
   database.then((db) => {
@@ -29,8 +27,6 @@ exports.singleProductView = (req, res) => {
   });
 };
 
-
-//category section --->
 exports.category = (req, res) => {
   let catID = req.params.id;
   database.then(async (db) => {
@@ -57,17 +53,79 @@ exports.category = (req, res) => {
   });
 };
 
-//Register page--->
+
 exports.registerPage = (req, res) => {
   res.render('user/register', { title: 'Register', layout: 'userLayout', registerPage: true });
 };
 
-//user login
+exports.registerUser = (req, res) => {
+  let userDetails = {
+    userName: req.body.user,
+    email: req.body.email,
+    password: req.body.password,
+    userStatus: 1
+  };
+
+  database.then((db) => {
+    bcrypt.hash(userDetails.password, 10).then((resPass) => {
+      userDetails.password = resPass;
+      db.collection('userInfo').insertOne(userDetails).then((userData) => {
+        console.log(userData);
+      });
+    });
+  })
+  res.redirect('/user/login');
+}
+
 exports.loginPage = (req, res) => {
   res.render('user/login', { title: 'Login', layout: 'userLayout', loginPage: true });
 };
 
-//cart page started here --->
+exports.loginUser = (req, res) => {
+  let userLoginDetails = {
+    email: req.body.email,
+    password: req.body.password
+  }
+
+  database.then((db) => {
+    db.collection('userInfo').findOne({ email: userLoginDetails.email }).then((userData) => {
+      console.log(userData);
+
+      if (userData) {
+        bcrypt.compare(userLoginDetails.password, userData.password).then((userPass) => {
+          if (userPass) {
+            if (userData.userStatus == 1) {
+              req.session.userData = userData;
+              res.redirect('/user');
+            }
+            else if (userData.userStatus == 0) {
+              req.session.userData = userData;
+              res.redirect('/admin')
+            }
+            else {
+              console.log('userStatus not found');
+            }
+          }
+          else {
+            console.log('Incorrect Password!');
+            res.redirect('/user/login');
+          }
+        });
+      }
+      else {
+        console.info('user not found!');
+        res.redirect('/user/login');
+      }
+    });
+  });
+};
+
+exports.userLogout = (req, res) => {
+  req.session.destroy();
+  console.info('Logout successfully..!');
+  res.redirect('/user/login');
+}
+
 exports.cartPage = (req, res) => {
   database.then(async (db) => {
     const user = req.session?.userData;
@@ -97,7 +155,52 @@ exports.cartPage = (req, res) => {
   });
 };
 
-//Order page started here--->
+exports.singleProductView = (req, res) => {
+  const cartProdID = req.params.id;
+  const user = req.session.userData;
+
+  if (!user) {
+    return res.redirect('/user/login')
+  };
+
+  const addToCartFormData = {
+    userID: new mongodb.ObjectId(user._id),
+    product: cartProdID,
+    orderStatus: 1,
+    quantity: 1
+  };
+
+  database.then(async (db) => {
+
+    const existingData = await db.collection('addToCartForm').findOne({
+      userID: new mongodb.ObjectId(user._id),
+      product: cartProdID
+    });
+
+    if (existingData) {
+      console.info('Product already in the cart!');
+      return res.redirect(`/user/singleproduct/${cartProdID}`);
+    }
+
+
+    const cartData = await db.collection('addToCartForm').insertOne(addToCartFormData);
+    console.info('Product added to cart:', cartData);
+    res.redirect(`/user/singleproduct/${cartProdID}`);
+  });
+
+};
+
+exports.deleteCartItem = (req, res) => {
+  let delID = req.params.id;
+
+  database.then((db) => {
+    db.collection('addToCartForm').deleteOne({ _id: new mongodb.ObjectId(delID) }).then((delData) => {
+      console.log(delData);
+    });
+  });
+  res.redirect('/user/cart')
+};
+
 exports.myOrders = (req, res) => {
 
   database.then(async (db) => {
@@ -141,6 +244,33 @@ exports.myOrders = (req, res) => {
     res.render('user/my-orders', { title: 'My orders', layout: 'userLayout', prodData, cartData, totalPrice, orderActive: true });
   });
 };
+
+exports.placeOrder = (req, res) => {
+  const user = req.session.userData;
+  if (!user) return res.redirect('/user/login');
+
+  let { productIds, quantities } = req.body;
+  if (!productIds) return res.status(400).send('No products selected');
+
+  // Normalize arrays
+  if (!Array.isArray(productIds)) productIds = [productIds];
+  if (!Array.isArray(quantities)) quantities = [quantities];
+
+  const objectIds = productIds.map(id => new mongodb.ObjectId(id));
+
+  database.then(async (db) => {
+    for (let i = 0; i < objectIds.length; i++) {
+      await db.collection('addToCartForm').updateOne(
+        { userID: new mongodb.ObjectId(user._id), _id: objectIds[i] },
+        { $set: { quantity: parseInt(quantities[i]), orderStatus: 2 } }
+      );
+    }
+    res.redirect('/user/myorders');
+
+  });
+};
+
+
 
 
 
